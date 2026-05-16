@@ -197,11 +197,13 @@ function HomePage() {
             <ExploreButton variant="ghost" label="View all machines" />
           </div>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <StaggerGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((m) => (
-              <MachineCard key={m.slug} machine={m} />
+              <StaggerItem key={m.slug}>
+                <MachineCard machine={m} />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
@@ -213,9 +215,9 @@ function HomePage() {
             title="Industrial-grade engineering, supplier-grade partnership."
             description="What separates OIS from a typical equipment vendor: deep technical expertise, in-stock spare parts, and a service team you can actually reach."
           />
-          <div className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+          <StaggerGroup className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
             {values.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="bg-background p-7">
+              <StaggerItem key={title} className="bg-background p-7 h-full">
                 <div className="grid h-11 w-11 place-items-center rounded-md bg-accent/10 text-accent">
                   <Icon className="h-5 w-5" />
                 </div>
@@ -225,9 +227,9 @@ function HomePage() {
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   {desc}
                 </p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
@@ -242,11 +244,13 @@ function HomePage() {
             />
             <ExploreButton to="/parts" variant="ghost" label="All auxiliary parts" />
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <StaggerGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featuredParts.map((p) => (
-              <PartCard key={p.slug} part={p} />
+              <StaggerItem key={p.slug}>
+                <PartCard part={p} />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
@@ -304,7 +308,7 @@ function HomePage() {
           {stats.map((s) => (
             <div key={s.label} className="bg-background p-6">
               <div className="font-display text-3xl font-semibold text-accent">
-                {s.value}
+                <CountUp value={s.value} />
               </div>
               <div className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
                 {s.label}
