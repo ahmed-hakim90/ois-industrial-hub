@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { RouteLoading } from "@/components/site/RouteLoading";
 import { useState } from "react";
 import { z } from "zod";
 import { Facebook, Mail, MapPin, MessageCircle, Phone } from "lucide-react";

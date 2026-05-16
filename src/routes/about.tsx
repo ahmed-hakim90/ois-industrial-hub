@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { RouteLoading } from "@/components/site/RouteLoading";
 import { Target, Eye, Award, Users, ShieldCheck, Globe2 } from "lucide-react";
 import aboutImg from "@/assets/about-team.jpg";
 import { SectionHeader } from "@/components/site/SectionHeader";

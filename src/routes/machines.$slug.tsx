@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { RouteLoading } from "@/components/site/RouteLoading";
 import { useState } from "react";
 import { Download, ArrowLeft } from "lucide-react";
 import { SectionHeader } from "@/components/site/SectionHeader";
