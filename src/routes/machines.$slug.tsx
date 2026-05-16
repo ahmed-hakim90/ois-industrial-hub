@@ -53,7 +53,7 @@ export const Route = createFileRoute("/machines/$slug")({
 });
 
 function MachineDetailPage() {
-  const { machine } = Route.useLoaderData();
+  const { machine } = Route.useLoaderData() as { machine: Machine };
   const [active, setActive] = useState(0);
   const related = relatedMachines(machine);
 
