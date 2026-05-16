@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { RouteLoading } from "@/components/site/RouteLoading";
 import {
   ShieldCheck,
   Wrench,
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/")({
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
+  pendingComponent: RouteLoading,
   component: HomePage,
 });
 

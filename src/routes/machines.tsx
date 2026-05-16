@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { RouteLoading } from "@/components/site/RouteLoading";
 import { useState } from "react";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { MachineCard } from "@/components/site/MachineCard";
@@ -26,6 +27,7 @@ export const Route = createFileRoute("/machines")({
     ],
     links: [{ rel: "canonical", href: "/machines" }],
   }),
+  pendingComponent: RouteLoading,
   component: MachinesPage,
 });
 

@@ -12,6 +12,7 @@ import appCss from "../styles.css?url";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
+import { RouteLoading } from "@/components/site/RouteLoading";
 import { site } from "@/config/site";
 
 function NotFoundComponent() {
@@ -111,6 +112,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   }),
   shellComponent: RootShell,
   component: RootComponent,
+  pendingComponent: RouteLoading,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
