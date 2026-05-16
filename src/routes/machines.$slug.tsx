@@ -8,11 +8,11 @@ import {
   WhatsAppButton,
   EmailButton,
 } from "@/components/site/CTAButtons";
-import { findMachine, relatedMachines } from "@/data/machines";
+import { findMachine, relatedMachines, type Machine } from "@/data/machines";
 import { site } from "@/config/site";
 
 export const Route = createFileRoute("/machines/$slug")({
-  loader: ({ params }) => {
+  loader: ({ params }): { machine: Machine } => {
     const machine = findMachine(params.slug);
     if (!machine) throw notFound();
     return { machine };
