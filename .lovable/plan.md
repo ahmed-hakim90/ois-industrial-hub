@@ -1,112 +1,58 @@
-## OIS Machinery — Corporate Website Plan
+# Add Animations to OIS Machinery Site
 
-A modern, responsive B2B website built on the existing TanStack Start + React + Tailwind v4 stack (the project's actual stack — equivalent to "Next.js/React" in spirit, fully SSR + SEO friendly). No e‑commerce, no auth.
+Layer subtle, premium motion across the site to reinforce the industrial-premium feel without hurting performance.
 
-### Design System
+## Approach
 
-**Palette (defaulting to Electric Blue accent — strongest fit for "modern industrial tech"):**
-- Background: deep navy `oklch(0.18 0.03 250)`
-- Surface / charcoal: `oklch(0.24 0.02 250)`
-- Steel gray: `oklch(0.62 0.015 250)`
-- Foreground: near-white
-- Accent (electric blue): `oklch(0.62 0.20 255)`
-- Light sections: off-white `oklch(0.98 0.005 250)` with charcoal text
+Use **Framer Motion** (`motion/react`) for scroll/entrance animations and **Tailwind keyframes** (already defined: `fade-in`, `scale-in`, `slide-in-right`) for lightweight CSS-only effects. Respect `prefers-reduced-motion`.
 
-**Typography:**
-- Headings: Space Grotesk (industrial, geometric, confident)
-- Body: Inter (clean, highly legible at small sizes)
-- Loud display sizes on hero/section headers; generous line-height in body.
+## Animations to add
 
-**Tokens** are defined once in `src/styles.css` (oklch variables + @theme inline mapping). All components consume semantic tokens — no raw hex in JSX.
+### 1. Global / shared
+- Create `src/components/site/Reveal.tsx` — a reusable `<Reveal>` wrapper using Framer Motion's `whileInView` with fade + slight Y translate (20px → 0), staggered children support.
+- Add `prefers-reduced-motion` guard inside Reveal (skip animation, render static).
+- Page transition: subtle fade on route change in `__root.tsx` `<Outlet />`.
 
-### Routes (TanStack file-based routing)
+### 2. Home page (`routes/index.tsx`)
+- Hero: headline + subhead + CTAs fade-up with stagger (0.1s delay each); hero image gentle scale-in (1.05 → 1) over 1.2s.
+- Stats counters: count-up animation when scrolled into view.
+- Featured machines grid: staggered card reveals.
+- Industries section: fade-up on scroll.
 
-```
-src/routes/
-  __root.tsx          (shell: Navbar + Outlet + Footer + floating WhatsApp)
-  index.tsx           /            Home
-  about.tsx           /about       About
-  machines.tsx        /machines    Machines catalog (with category filter)
-  machines.$slug.tsx  /machines/:slug  Machine detail
-  parts.tsx           /parts       Auxiliary parts
-  contact.tsx         /contact     Contact
-```
+### 3. Machines / Parts pages
+- Card grids: stagger reveal on mount + on filter change.
+- `MachineCard` / `PartCard`: hover lift (translateY -4px) + image zoom (scale 1.05) + shadow elevation — pure CSS transitions.
 
-Each route defines its own `head()` (title, description, og:title, og:description, og:url, canonical on leaf only). Index root holds sitewide Organization JSON-LD.
+### 4. Machine detail page
+- Gallery main image: crossfade when switching thumbnails.
+- Spec table rows: subtle stagger fade-in.
 
-### Reusable Components (`src/components/`)
+### 5. Navbar
+- Mobile menu: slide-down with fade (Framer Motion `AnimatePresence`).
+- Nav link underline: animated scale-x on hover (use existing `story-link` utility).
 
-- `Navbar.tsx` — sticky, translucent on scroll, logo + nav links + "Request a Quote" button
-- `Footer.tsx` — columns: company, quick links, contact, social (Facebook/WhatsApp/Email)
-- `FloatingWhatsApp.tsx` — fixed bottom-right, accessible label, hidden in print
-- `Hero.tsx` — full-width image background, headline, sub, dual CTA
-- `SectionHeader.tsx` — eyebrow + title + optional kicker
-- `MachineCard.tsx` — image, name, short desc, View Details / Request Quote / WhatsApp
-- `PartCard.tsx` — same skeleton, "Inquire" button
-- `SpecTable.tsx` — two-column responsive specs
-- `StatCounter.tsx` — static numbers (no animation per spec — keeps things light)
-- `IndustryTile.tsx`, `LogoStrip.tsx`, `CTASection.tsx` (final-CTA band)
-- `QuoteButton.tsx`, `WhatsAppButton.tsx`, `EmailButton.tsx` — shared CTA primitives so contact details live in ONE place
-- `ContactForm.tsx` — Zod-validated (name, company, email, phone, product, message); on submit opens prefilled `mailto:` (no backend needed; user did not request one)
+### 6. Contact page
+- Form fields: fade-up stagger on mount.
+- Submit button: subtle press scale (0.97) on tap.
 
-### Data Layer
+### 7. CTA Section & Footer
+- Fade-up on scroll.
 
-`src/data/machines.ts` and `src/data/parts.ts` — typed arrays of placeholder content (6+ each), with categories like CNC, Hydraulic Press, Packaging, Material Handling, Welding, Cutting. Each machine has slug, name, category, summary, hero image, gallery, specs[], description blocks. Machine detail page reads by slug. Wrong slug → notFoundComponent.
+## Technical notes
+- `framer-motion` package: install via `bun add framer-motion` if not already present.
+- Keep all durations 0.3–0.6s, easing `easeOut`.
+- All scroll animations use `viewport={{ once: true, margin: "-80px" }}` to trigger slightly before entering view and only once.
+- No layout-shifting animations; only transform + opacity for 60fps.
+- Bundle impact: ~30kb gzipped for Framer Motion — acceptable for the premium feel.
 
-`src/config/site.ts` — single source of truth for company name, WhatsApp number, email, Facebook URL, address. CTA buttons import from here so updating contact info is one edit.
+## Files to create
+- `src/components/site/Reveal.tsx`
+- `src/components/site/CountUp.tsx` (for stats)
 
-### Pages — Section Breakdown
-
-**Home** — Hero · Intro strip · Featured Machines (3 cards) · Parts preview (3 cards) · Why Choose OIS (4 value props with icons) · Industries Served (grid of 6) · Partners logo strip · Stats band (years, machines delivered, countries, clients) · Final CTA · Footer.
-
-**About** — Intro, mission/vision two-up, experience timeline (simple list), trust indicators (certifications, quality, support), team-strength callouts.
-
-**Machines** — Category filter chips (client-side filter via `useState`), responsive grid (1/2/3 cols), MachineCard for each item.
-
-**Machine Detail** — Image gallery (main + thumbnails, no carousel lib — pure CSS grid + state), title, summary, SpecTable, technical description prose, Download brochure (placeholder PDF link), Quote/WhatsApp/Email CTA band, Related Machines (same category, excluding self).
-
-**Auxiliary Parts** — Grid of PartCard, intro header, final CTA section.
-
-**Contact** — Two-column on desktop: form (left), contact info + map placeholder + social (right). Stacks on mobile. Sticky "Quote" CTA visible on mobile.
-
-### Global Features
-
-- Floating WhatsApp button on every page via `__root.tsx`.
-- Request Quote CTA appears in: navbar, hero, every machine card, every detail page, final CTA band, footer.
-- All external links: `rel="noopener"`, WhatsApp uses `https://wa.me/<number>?text=...`, email uses `mailto:` with prefilled subject when contextual (e.g. "Quotation request: <Machine Name>").
-- Defaults until user provides real info: WhatsApp `+20XXXXXXXXXX`, email `info@oismachinery.com`, Facebook `https://facebook.com/oismachinery`. Centralized in `site.ts` so they can be swapped in one place.
-
-### Responsive Strategy
-
-Tailwind breakpoints: mobile-first, then `md` (768), `lg` (1024), `xl` (1280), `2xl` (1536). Container max-width 1440. Grids: 1 col mobile → 2 col tablet → 3 col desktop. Typography uses `clamp()` for fluid hero sizes. Images use `loading="lazy"` (except hero), explicit width/height to prevent CLS, `object-cover` with aspect-ratio.
-
-### Performance
-
-- No carousel/animation libraries.
-- Generate hero + a couple of machine placeholder images via imagegen (industrial photography style); the rest reuse a small set.
-- Lazy-load below-the-fold images.
-- No icon libraries beyond `lucide-react` (already in project).
-
-### SEO
-
-- Per-route `head()` with unique title/description/og.
-- Single H1 per page.
-- Organization JSON-LD in `__root.tsx`; Product JSON-LD on each machine detail page using loader data.
-- Semantic landmarks (`<header>`, `<main>`, `<nav>`, `<footer>`), alt text on all images.
-
-### Out of Scope (per spec)
-
-No cart, checkout, accounts, payments, backend, CMS, or Cloud activation. Form submits via `mailto:` — if user later wants real submission, we can add a server function + Cloud.
-
-### Build Order
-
-1. Tokens + typography in `src/styles.css`; `site.ts` config; data files.
-2. Shared primitives (buttons, cards, section header) + Navbar + Footer + FloatingWhatsApp in `__root.tsx`.
-3. Generate ~4 hero/industrial images.
-4. Home page.
-5. Machines list + filter, Machine detail with related.
-6. Parts page.
-7. About page.
-8. Contact page + form validation.
-9. Per-route `head()` metadata pass + JSON-LD.
-10. Responsive QA at 1440/1280/1024/768/430/390.
+## Files to edit
+- `src/routes/__root.tsx` (page transition)
+- `src/routes/index.tsx` (hero, stats, sections)
+- `src/routes/machines.tsx`, `machines.$slug.tsx`, `parts.tsx`, `contact.tsx`, `about.tsx`
+- `src/components/site/Navbar.tsx` (mobile menu)
+- `src/components/site/MachineCard.tsx`, `PartCard.tsx` (hover)
+- `src/components/site/CTASection.tsx`, `Footer.tsx`
