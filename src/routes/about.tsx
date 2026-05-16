@@ -25,6 +25,7 @@ export const Route = createFileRoute("/about")({
     ],
     links: [{ rel: "canonical", href: "/about" }],
   }),
+  pendingComponent: RouteLoading,
   component: AboutPage,
 });
 
