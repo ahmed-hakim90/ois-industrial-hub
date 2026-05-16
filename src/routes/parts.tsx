@@ -3,6 +3,7 @@ import { RouteLoading } from "@/components/site/RouteLoading";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { PartCard } from "@/components/site/PartCard";
 import { CTASection } from "@/components/site/CTASection";
+import { StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 import { parts_list } from "@/data/parts";
 import { site } from "@/config/site";
 
@@ -57,11 +58,13 @@ function PartsPage() {
             eyebrow="Catalog"
             title="Auxiliary components and spare parts."
           />
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <StaggerGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {parts_list.map((p) => (
-              <PartCard key={p.slug} part={p} />
+              <StaggerItem key={p.slug}>
+                <PartCard part={p} />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
