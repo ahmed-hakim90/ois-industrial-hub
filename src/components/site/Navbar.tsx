@@ -1,8 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { Menu } from "lucide-react";
 import { site } from "@/constants";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { QuoteButton } from "./CTAButtons";
 import { cn } from "@/lib/utils";
 
@@ -54,41 +59,43 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <QuoteButton size="sm" className="hidden md:inline-flex" />
           <button
-            onClick={() => setOpen((v) => !v)}
-            aria-label="Toggle menu"
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
             className="grid h-10 w-10 place-items-center rounded-md border border-border lg:hidden"
           >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <Menu className="h-5 w-5" />
           </button>
         </div>
       </div>
 
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="mobile-menu"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-t border-border bg-background lg:hidden"
-          >
-            <div className="container-x flex flex-col py-3">
-              {site.nav.map((item) => (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  onClick={() => setOpen(false)}
-                  className="py-3 text-base font-medium text-foreground"
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <QuoteButton className="mt-2" />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent
+          side="right"
+          className="flex w-[min(100vw-2rem,20rem)] flex-col gap-0 p-0 sm:max-w-xs"
+        >
+          <SheetHeader className="border-b border-border px-6 py-5 text-left">
+            <SheetTitle className="font-display text-base">{site.name}</SheetTitle>
+          </SheetHeader>
+          <nav className="flex flex-1 flex-col px-2 py-2">
+            {site.nav.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={() => setOpen(false)}
+                activeOptions={{ exact: item.to === "/" }}
+                activeProps={{ className: "bg-muted text-foreground" }}
+                inactiveProps={{ className: "text-muted-foreground" }}
+                className="rounded-md px-4 py-3 text-base font-medium transition-colors hover:bg-muted hover:text-foreground"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="border-t border-border px-6 py-5" onClick={() => setOpen(false)}>
+            <QuoteButton className="w-full" />
+          </div>
+        </SheetContent>
+      </Sheet>
     </header>
   );
 }

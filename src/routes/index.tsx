@@ -89,7 +89,7 @@ function HomePage() {
               className="mt-8 flex flex-wrap gap-3"
             >
               <QuoteButton size="lg" />
-              <ExploreButton size="lg" />
+              <ExploreButton size="lg" variant="surface" />
             </motion.div>
           </div>
 

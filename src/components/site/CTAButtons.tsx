@@ -13,7 +13,7 @@ const variants: Record<Variant, string> = {
   accent: "bg-accent text-accent-foreground hover:bg-accent/90",
   solid: "bg-primary text-primary-foreground hover:bg-primary/90",
   outline:
-    "border border-border bg-transparent text-foreground hover:bg-secondary",
+    "border border-current/40 bg-transparent text-inherit hover:bg-current/10",
   ghost: "bg-transparent text-foreground hover:bg-secondary",
   whatsapp:
     "border border-[#25D366] bg-[#25D366]/15 text-[#86efac] hover:bg-[#25D366] hover:text-white",
