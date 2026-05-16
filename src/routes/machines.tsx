@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { AnimatePresence, motion } from "framer-motion";
 import { RouteLoading } from "@/components/site/RouteLoading";
 import { useState } from "react";
 import { SectionHeader } from "@/components/site/SectionHeader";
@@ -74,11 +75,28 @@ function MachinesPage() {
             ))}
           </div>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((m) => (
-              <MachineCard key={m.slug} machine={m} />
-            ))}
-          </div>
+          <motion.div
+            key={active}
+            initial="hidden"
+            animate="show"
+            variants={{ show: { transition: { staggerChildren: 0.06 } } }}
+            className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            <AnimatePresence mode="popLayout">
+              {filtered.map((m) => (
+                <motion.div
+                  key={m.slug}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                  }}
+                  layout
+                >
+                  <MachineCard machine={m} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
 
           {filtered.length === 0 && (
             <p className="mt-12 text-center text-muted-foreground">
