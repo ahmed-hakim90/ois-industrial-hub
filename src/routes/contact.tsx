@@ -46,6 +46,7 @@ export const Route = createFileRoute("/contact")({
     ],
     links: [{ rel: "canonical", href: "/contact" }],
   }),
+  pendingComponent: RouteLoading,
   component: ContactPage,
 });
 

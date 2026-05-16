@@ -50,6 +50,7 @@ export const Route = createFileRoute("/machines/$slug")({
       ],
     };
   },
+  pendingComponent: RouteLoading,
   component: MachineDetailPage,
 });
 

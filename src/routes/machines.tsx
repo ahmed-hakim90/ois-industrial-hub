@@ -27,6 +27,7 @@ export const Route = createFileRoute("/machines")({
     ],
     links: [{ rel: "canonical", href: "/machines" }],
   }),
+  pendingComponent: RouteLoading,
   component: MachinesPage,
 });
 

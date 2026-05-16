@@ -28,6 +28,7 @@ export const Route = createFileRoute("/parts")({
     ],
     links: [{ rel: "canonical", href: "/parts" }],
   }),
+  pendingComponent: RouteLoading,
   component: PartsPage,
 });
 
