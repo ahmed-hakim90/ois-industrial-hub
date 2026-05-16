@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { motion } from "framer-motion";
 import { RouteLoading } from "@/components/site/RouteLoading";
 import {
   ShieldCheck,
@@ -15,6 +16,8 @@ import { SectionHeader } from "@/components/site/SectionHeader";
 import { MachineCard } from "@/components/site/MachineCard";
 import { PartCard } from "@/components/site/PartCard";
 import { CTASection } from "@/components/site/CTASection";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
+import { CountUp } from "@/components/site/CountUp";
 import { machines } from "@/data/machines";
 import { parts_list } from "@/data/parts";
 import { site } from "@/config/site";
@@ -82,12 +85,15 @@ function HomePage() {
       {/* HERO */}
       <section className="relative overflow-hidden bg-surface text-surface-foreground">
         <div className="absolute inset-0">
-          <img
+          <motion.img
             src={heroImg}
             alt="Industrial machinery factory floor"
             width={1920}
             height={1080}
             className="h-full w-full object-cover opacity-70"
+            initial={{ scale: 1.08 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/85 to-surface/30" />
           <div className="absolute inset-0 hero-grid-bg opacity-40" />
@@ -95,35 +101,58 @@ function HomePage() {
 
         <div className="container-x relative grid gap-10 py-20 md:py-28 lg:grid-cols-[1.3fr_1fr] lg:items-center lg:py-36">
           <div>
-            <div className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent"
+            >
               <span className="h-px w-10 bg-accent" />
               B2B Industrial Equipment
-            </div>
-            <h1
+            </motion.div>
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="text-balance font-display font-semibold leading-[1.05] text-surface-foreground"
               style={{ fontSize: "clamp(2.4rem, 5.2vw, 4.5rem)" }}
             >
               Industrial Machinery <br className="hidden md:block" />
               Solutions <span className="text-accent">Built for Performance</span>
-            </h1>
-            <p className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-surface-foreground/75 md:text-lg">
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-surface-foreground/75 md:text-lg"
+            >
               {site.name} supplies premium machines, heavy equipment, and
               auxiliary parts to manufacturers across the region — backed by
               expert engineering, spare-parts inventory, and lifetime
               after-sales support.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.32, ease: "easeOut" }}
+              className="mt-8 flex flex-wrap gap-3"
+            >
               <QuoteButton size="lg" />
               <ExploreButton size="lg" />
-            </div>
+            </motion.div>
           </div>
 
-          <div className="hidden lg:block">
+          <motion.div
+            className="hidden lg:block"
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          >
             <div className="ml-auto grid max-w-sm grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur">
               {stats.map((s) => (
                 <div key={s.label} className="bg-surface/60 p-5">
                   <div className="font-display text-3xl font-semibold text-accent">
-                    {s.value}
+                    <CountUp value={s.value} />
                   </div>
                   <div className="mt-1 text-xs uppercase tracking-wider text-surface-foreground/60">
                     {s.label}
@@ -131,7 +160,7 @@ function HomePage() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -168,11 +197,13 @@ function HomePage() {
             <ExploreButton variant="ghost" label="View all machines" />
           </div>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <StaggerGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((m) => (
-              <MachineCard key={m.slug} machine={m} />
+              <StaggerItem key={m.slug}>
+                <MachineCard machine={m} />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
@@ -184,9 +215,9 @@ function HomePage() {
             title="Industrial-grade engineering, supplier-grade partnership."
             description="What separates OIS from a typical equipment vendor: deep technical expertise, in-stock spare parts, and a service team you can actually reach."
           />
-          <div className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+          <StaggerGroup className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
             {values.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="bg-background p-7">
+              <StaggerItem key={title} className="bg-background p-7 h-full">
                 <div className="grid h-11 w-11 place-items-center rounded-md bg-accent/10 text-accent">
                   <Icon className="h-5 w-5" />
                 </div>
@@ -196,9 +227,9 @@ function HomePage() {
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                   {desc}
                 </p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
@@ -213,11 +244,13 @@ function HomePage() {
             />
             <ExploreButton to="/parts" variant="ghost" label="All auxiliary parts" />
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <StaggerGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featuredParts.map((p) => (
-              <PartCard key={p.slug} part={p} />
+              <StaggerItem key={p.slug}>
+                <PartCard part={p} />
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </section>
 
@@ -275,7 +308,7 @@ function HomePage() {
           {stats.map((s) => (
             <div key={s.label} className="bg-background p-6">
               <div className="font-display text-3xl font-semibold text-accent">
-                {s.value}
+                <CountUp value={s.value} />
               </div>
               <div className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
                 {s.label}

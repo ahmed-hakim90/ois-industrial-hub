@@ -5,7 +5,7 @@ import type { Machine } from "@/data/machines";
 
 export function MachineCard({ machine }: { machine: Machine }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-shadow hover:shadow-xl hover:shadow-black/5">
+    <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10 hover:border-accent/40">
       <Link
         to="/machines/$slug"
         params={{ slug: machine.slug }}

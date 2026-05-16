@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { site } from "@/config/site";
 import { QuoteButton } from "./CTAButtons";
 import { cn } from "@/lib/utils";
@@ -62,23 +63,32 @@ export function Navbar() {
         </div>
       </div>
 
-      {open && (
-        <div className="border-t border-border bg-background lg:hidden">
-          <div className="container-x flex flex-col py-3">
-            {site.nav.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={() => setOpen(false)}
-                className="py-3 text-base font-medium text-foreground"
-              >
-                {item.label}
-              </Link>
-            ))}
-            <QuoteButton className="mt-2" />
-          </div>
-        </div>
-      )}
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden border-t border-border bg-background lg:hidden"
+          >
+            <div className="container-x flex flex-col py-3">
+              {site.nav.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setOpen(false)}
+                  className="py-3 text-base font-medium text-foreground"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <QuoteButton className="mt-2" />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
