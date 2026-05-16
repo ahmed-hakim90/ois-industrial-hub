@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { AnimatePresence, motion } from "framer-motion";
 import { RouteLoading } from "@/components/site/RouteLoading";
+import { useState } from "react";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { PartCard } from "@/components/site/PartCard";
 import { CTASection } from "@/components/site/CTASection";
-import { StaggerGroup, StaggerItem } from "@/components/site/Reveal";
-import { parts_list } from "@/data/parts";
-import { site } from "@/config/site";
+import { partCategoryLabels, parts_list, site } from "@/constants";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/parts")({
   head: () => ({
@@ -34,6 +35,13 @@ export const Route = createFileRoute("/parts")({
 });
 
 function PartsPage() {
+  const [active, setActive] = useState<(typeof partCategoryLabels)[number]>("All");
+
+  const filtered =
+    active === "All"
+      ? parts_list
+      : parts_list.filter((p) => p.category === active);
+
   return (
     <>
       <section className="bg-surface text-surface-foreground">
@@ -52,19 +60,62 @@ function PartsPage() {
         </div>
       </section>
 
-      <section className="bg-background py-20 md:py-24">
+      <section className="bg-background py-16 md:py-20">
         <div className="container-x">
           <SectionHeader
             eyebrow="Catalog"
             title="Auxiliary components and spare parts."
           />
-          <StaggerGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {parts_list.map((p) => (
-              <StaggerItem key={p.slug}>
-                <PartCard part={p} />
-              </StaggerItem>
+
+          <div className="mt-10 flex flex-wrap gap-2">
+            {partCategoryLabels.map((c) => (
+              <button
+                key={c}
+                onClick={() => setActive(c)}
+                className={cn(
+                  "rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+                  active === c
+                    ? "border-accent bg-accent text-accent-foreground"
+                    : "border-border bg-background text-muted-foreground hover:border-foreground hover:text-foreground",
+                )}
+              >
+                {c}
+              </button>
             ))}
-          </StaggerGroup>
+          </div>
+
+          <motion.div
+            key={active}
+            initial="hidden"
+            animate="show"
+            variants={{ show: { transition: { staggerChildren: 0.06 } } }}
+            className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            <AnimatePresence mode="popLayout">
+              {filtered.map((p) => (
+                <motion.div
+                  key={p.slug}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    show: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+                    },
+                  }}
+                  layout
+                >
+                  <PartCard part={p} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {filtered.length === 0 && (
+            <p className="mt-12 text-center text-muted-foreground">
+              No parts in this category yet. Contact us for a custom inquiry.
+            </p>
+          )}
         </div>
       </section>
 

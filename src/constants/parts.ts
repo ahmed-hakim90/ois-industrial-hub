@@ -1,60 +1,88 @@
-import parts from "@/assets/parts-hero.jpg";
+import { images } from "./images";
 
-export type Part = {
+export const partCategories = [
+  {
+    id: "rotating",
+    label: "Rotating Parts",
+    image: images.partCategories.rotating,
+  },
+  {
+    id: "hydraulics",
+    label: "Hydraulics",
+    image: images.partCategories.hydraulics,
+  },
+  {
+    id: "powerTransmission",
+    label: "Power Transmission",
+    image: images.partCategories.powerTransmission,
+  },
+  {
+    id: "conveying",
+    label: "Conveying",
+    image: images.partCategories.conveying,
+  },
+  {
+    id: "electrical",
+    label: "Electrical",
+    image: images.partCategories.electrical,
+  },
+  {
+    id: "automation",
+    label: "Automation",
+    image: images.partCategories.automation,
+  },
+] as const;
+
+export type PartCategoryId = (typeof partCategories)[number]["id"];
+
+export type PartRaw = {
   slug: string;
   name: string;
-  category: string;
+  categoryId: PartCategoryId;
   summary: string;
-  image: string;
 };
 
-export const parts_list: Part[] = [
+export const partCatalog: PartRaw[] = [
   {
     slug: "industrial-bearings",
     name: "Industrial Precision Bearings",
-    category: "Rotating Parts",
+    categoryId: "rotating",
     summary:
       "OEM-grade roller and ball bearings for high-load, high-speed machinery applications.",
-    image: parts,
   },
   {
     slug: "hydraulic-cylinders",
     name: "Heavy-Duty Hydraulic Cylinders",
-    category: "Hydraulics",
+    categoryId: "hydraulics",
     summary:
       "Double-acting hydraulic cylinders with chrome-plated rods for presses and material handlers.",
-    image: parts,
   },
   {
     slug: "drive-gears",
     name: "Hardened Drive Gears & Sprockets",
-    category: "Power Transmission",
+    categoryId: "powerTransmission",
     summary:
       "Case-hardened spur and helical gears matched to industrial gearboxes and conveyors.",
-    image: parts,
   },
   {
     slug: "conveyor-belts",
     name: "Industrial Conveyor Belts",
-    category: "Conveying",
+    categoryId: "conveying",
     summary:
       "Multi-ply rubber and modular belts for mining, packaging, and food-grade conveying.",
-    image: parts,
   },
   {
     slug: "electric-motors",
     name: "AC Industrial Electric Motors",
-    category: "Electrical",
+    categoryId: "electrical",
     summary:
       "IE3 high-efficiency three-phase induction motors from 0.75 kW to 250 kW.",
-    image: parts,
   },
   {
     slug: "control-panels",
     name: "Custom PLC Control Panels",
-    category: "Automation",
+    categoryId: "automation",
     summary:
       "Turnkey electrical cabinets with PLC, HMI, and VFD integration to your specifications.",
-    image: parts,
   },
 ];

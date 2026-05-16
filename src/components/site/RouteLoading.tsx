@@ -1,6 +1,6 @@
 export function RouteLoading() {
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-[50vh] flex-col bg-background">
       {/* Hero skeleton */}
       <section className="bg-surface">
         <div className="container-x animate-pulse py-20 md:py-28 lg:py-36">

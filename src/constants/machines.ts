@@ -1,40 +1,56 @@
-import cnc from "@/assets/machine-cnc.jpg";
-import press from "@/assets/machine-press.jpg";
-import laser from "@/assets/machine-laser.jpg";
-import packaging from "@/assets/machine-packaging.jpg";
-import welding from "@/assets/machine-welding.jpg";
-import forklift from "@/assets/machine-forklift.jpg";
+import { images } from "./images";
 
-export type Machine = {
+export const machineCategories = [
+  {
+    id: "cnc",
+    label: "CNC & Machining",
+    image: images.machineCategories.cnc,
+  },
+  {
+    id: "hydraulicPress",
+    label: "Hydraulic Press",
+    image: images.machineCategories.hydraulicPress,
+  },
+  {
+    id: "cutting",
+    label: "Cutting",
+    image: images.machineCategories.cutting,
+  },
+  {
+    id: "packaging",
+    label: "Packaging",
+    image: images.machineCategories.packaging,
+  },
+  {
+    id: "welding",
+    label: "Welding",
+    image: images.machineCategories.welding,
+  },
+  {
+    id: "materialHandling",
+    label: "Material Handling",
+    image: images.machineCategories.materialHandling,
+  },
+] as const;
+
+export type MachineCategoryId = (typeof machineCategories)[number]["id"];
+
+export type MachineRaw = {
   slug: string;
   name: string;
-  category: string;
+  categoryId: MachineCategoryId;
   summary: string;
-  image: string;
-  gallery: string[];
   description: string[];
   specs: { label: string; value: string }[];
 };
 
-export const categories = [
-  "All",
-  "CNC & Machining",
-  "Hydraulic Press",
-  "Cutting",
-  "Packaging",
-  "Welding",
-  "Material Handling",
-] as const;
-
-export const machines: Machine[] = [
+export const machineCatalog: MachineRaw[] = [
   {
     slug: "vmc-820-cnc-machining-center",
     name: "VMC-820 Vertical Machining Center",
-    category: "CNC & Machining",
+    categoryId: "cnc",
     summary:
       "High-rigidity 3-axis vertical machining center for precision metal cutting in production environments.",
-    image: cnc,
-    gallery: [cnc, cnc, cnc],
     description: [
       "The VMC-820 delivers consistent micron-level accuracy for high-volume machining of steel, aluminium, and exotic alloys. Built on a meehanite cast iron base, the machine resists vibration and maintains thermal stability over long shifts.",
       "A 24-tool arm-type ATC, direct-drive 12,000 RPM spindle, and integrated coolant-through-spindle system enable demanding aerospace, automotive, and mould-making applications.",
@@ -52,11 +68,9 @@ export const machines: Machine[] = [
   {
     slug: "hp-200-hydraulic-press",
     name: "HP-200 Heavy-Duty Hydraulic Press",
-    category: "Hydraulic Press",
+    categoryId: "hydraulicPress",
     summary:
       "200-ton four-column hydraulic press for forming, stamping, and deep drawing operations.",
-    image: press,
-    gallery: [press, press, press],
     description: [
       "The HP-200 is engineered for continuous duty in metal forming workshops. A high-stiffness welded frame and four-column guidance system ensure parallelism under maximum load.",
       "PLC-controlled cycle, dual-hand safety controls, and a programmable stroke make the HP-200 suitable for both batch production and prototyping.",
@@ -74,11 +88,9 @@ export const machines: Machine[] = [
   {
     slug: "fl-3015-fiber-laser-cutter",
     name: "FL-3015 Fiber Laser Cutter",
-    category: "Cutting",
+    categoryId: "cutting",
     summary:
       "Enclosed fiber laser cutting system for high-speed precision cutting of sheet metal up to 25 mm.",
-    image: laser,
-    gallery: [laser, laser, laser],
     description: [
       "Powered by an IPG fiber source and a high-acceleration linear-motor gantry, the FL-3015 produces clean, oxide-free cuts in carbon steel, stainless steel, aluminium, brass, and copper.",
       "An automatic shuttle table, capacitive height sensor, and integrated extraction make it a turnkey solution for production cutting cells.",
@@ -96,11 +108,9 @@ export const machines: Machine[] = [
   {
     slug: "pk-500-rotary-filler",
     name: "PK-500 Rotary Filling Line",
-    category: "Packaging",
+    categoryId: "packaging",
     summary:
       "Automatic rotary filling and capping line for food, cosmetic, and chemical applications.",
-    image: packaging,
-    gallery: [packaging, packaging, packaging],
     description: [
       "The PK-500 integrates filling, capping, and labelling into a single hygienic stainless-steel platform. Quick-change tooling supports a wide range of bottle and cap formats.",
       "Servo-driven fill heads ensure dosing accuracy across viscosities; the HMI provides recipe storage, OEE reporting, and audit logs.",
@@ -118,11 +128,9 @@ export const machines: Machine[] = [
   {
     slug: "rw-7-robotic-welding-cell",
     name: "RW-7 Robotic Welding Cell",
-    category: "Welding",
+    categoryId: "welding",
     summary:
       "Pre-engineered 6-axis robotic MIG welding cell with positioner and safety enclosure.",
-    image: welding,
-    gallery: [welding, welding, welding],
     description: [
       "The RW-7 cell shortens deployment time with a factory-tested base, dual-station positioner, and offline programming support. The 6-axis arm delivers repeatable weld quality across complex geometries.",
       "Built-in safety light curtains, fume extraction, and torch cleaning station are included as standard.",
@@ -140,11 +148,9 @@ export const machines: Machine[] = [
   {
     slug: "fl-30d-diesel-forklift",
     name: "FL-30D 3-Ton Diesel Forklift",
-    category: "Material Handling",
+    categoryId: "materialHandling",
     summary:
       "Robust 3-ton diesel forklift for warehousing, ports, and outdoor industrial sites.",
-    image: forklift,
-    gallery: [forklift, forklift, forklift],
     description: [
       "Powered by a low-emission turbo diesel engine, the FL-30D combines high lifting capacity with operator comfort and excellent visibility through the three-stage mast.",
       "Wet disc brakes, a reinforced overhead guard, and an ergonomic cabin reduce operator fatigue across long shifts.",
@@ -160,9 +166,3 @@ export const machines: Machine[] = [
     ],
   },
 ];
-
-export const findMachine = (slug: string) =>
-  machines.find((m) => m.slug === slug);
-
-export const relatedMachines = (m: Machine) =>
-  machines.filter((x) => x.category === m.category && x.slug !== m.slug).slice(0, 3);

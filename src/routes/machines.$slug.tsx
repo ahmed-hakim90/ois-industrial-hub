@@ -9,8 +9,7 @@ import {
   WhatsAppButton,
   EmailButton,
 } from "@/components/site/CTAButtons";
-import { findMachine, relatedMachines, type Machine } from "@/data/machines";
-import { site } from "@/config/site";
+import { findMachine, relatedMachines, site, type Machine } from "@/constants";
 
 export const Route = createFileRoute("/machines/$slug")({
   loader: ({ params }): { machine: Machine } => {

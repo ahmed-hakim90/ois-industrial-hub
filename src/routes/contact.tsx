@@ -3,7 +3,7 @@ import { RouteLoading } from "@/components/site/RouteLoading";
 import { useState } from "react";
 import { z } from "zod";
 import { Facebook, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
-import { mailLink, site, waLink } from "@/config/site";
+import { mailLink, site, waLink } from "@/constants";
 import { cn } from "@/lib/utils";
 
 const contactSchema = z.object({

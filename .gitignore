@@ -16,6 +16,9 @@ dist-ssr
 .nitro
 *.local
 
+# Lovable (legacy editor metadata)
+.lovable/
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars

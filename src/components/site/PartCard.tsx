@@ -1,5 +1,5 @@
 import { QuoteButton, WhatsAppButton } from "./CTAButtons";
-import type { Part } from "@/data/parts";
+import type { Part } from "@/constants";
 
 export function PartCard({ part }: { part: Part }) {
   return (

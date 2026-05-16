@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { QuoteButton, WhatsAppButton } from "./CTAButtons";
-import type { Machine } from "@/data/machines";
+import type { Machine } from "@/constants";
 
 export function MachineCard({ machine }: { machine: Machine }) {
   return (

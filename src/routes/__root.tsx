@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
-  Outlet,
   Link,
   createRootRouteWithContext,
   useRouter,
@@ -9,11 +8,12 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { AnimatedOutlet } from "@/components/site/AnimatedOutlet";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
 import { RouteLoading } from "@/components/site/RouteLoading";
-import { site } from "@/config/site";
+import { site } from "@/constants";
 
 function NotFoundComponent() {
   return (
@@ -78,14 +78,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#16213e" },
-      { title: "Lovable App" },
-      { property: "og:title", content: "Lovable App" },
-      { name: "twitter:title", content: "Lovable App" },
-      { name: "description", content: "OIS Machinery Forge is a modern corporate website showcasing industrial machinery and parts." },
-      { property: "og:description", content: "OIS Machinery Forge is a modern corporate website showcasing industrial machinery and parts." },
-      { name: "twitter:description", content: "OIS Machinery Forge is a modern corporate website showcasing industrial machinery and parts." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/eb449586-20e1-40b3-adaa-58be9df77f9f/id-preview-55355bb1--e7d69d9f-e97c-456e-b825-3d40f54c344f.lovable.app-1778954075511.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/eb449586-20e1-40b3-adaa-58be9df77f9f/id-preview-55355bb1--e7d69d9f-e97c-456e-b825-3d40f54c344f.lovable.app-1778954075511.png" },
+      { property: "og:title", content: `${site.name} — ${site.tagline}` },
+      { name: "twitter:title", content: `${site.name} — ${site.tagline}` },
+      { property: "og:description", content: site.description },
+      { name: "twitter:description", content: site.description },
+      { property: "og:image", content: `${site.url}${site.ogImagePath}` },
+      { name: "twitter:image", content: `${site.url}${site.ogImagePath}` },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -139,7 +137,7 @@ function RootComponent() {
       <div className="flex min-h-screen flex-col bg-background">
         <Navbar />
         <main className="flex-1">
-          <Outlet />
+          <AnimatedOutlet />
         </main>
         <Footer />
         <FloatingWhatsApp />

@@ -26,8 +26,8 @@ export function CTASection({
         </div>
         <div className="flex flex-col gap-3 md:items-end">
           <QuoteButton size="lg" />
-          <WhatsAppButton size="lg" />
-          <EmailButton size="lg" />
+          <WhatsAppButton size="lg" variant="whatsapp" />
+          <EmailButton size="lg" variant="surface" />
         </div>
       </div>
     </section>

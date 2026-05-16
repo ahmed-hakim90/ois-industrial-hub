@@ -5,8 +5,7 @@ import { useState } from "react";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { MachineCard } from "@/components/site/MachineCard";
 import { CTASection } from "@/components/site/CTASection";
-import { categories, machines } from "@/data/machines";
-import { site } from "@/config/site";
+import { categories, machines, site } from "@/constants";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/machines")({

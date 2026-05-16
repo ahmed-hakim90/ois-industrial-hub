@@ -1,16 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { RouteLoading } from "@/components/site/RouteLoading";
-import {
-  ShieldCheck,
-  Wrench,
-  Truck,
-  Award,
-  Factory,
-  Cog,
-  ArrowRight,
-} from "lucide-react";
-import heroImg from "@/assets/hero-machinery.jpg";
+import { Factory, Cog, ArrowRight } from "lucide-react";
 import { QuoteButton, ExploreButton } from "@/components/site/CTAButtons";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { MachineCard } from "@/components/site/MachineCard";
@@ -18,9 +9,7 @@ import { PartCard } from "@/components/site/PartCard";
 import { CTASection } from "@/components/site/CTASection";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 import { CountUp } from "@/components/site/CountUp";
-import { machines } from "@/data/machines";
-import { parts_list } from "@/data/parts";
-import { site } from "@/config/site";
+import { home, machines, parts_list, site } from "@/constants";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -37,46 +26,8 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const values = [
-  {
-    icon: ShieldCheck,
-    title: "Engineered Reliability",
-    desc: "Equipment specified for continuous-duty industrial operation and long service life.",
-  },
-  {
-    icon: Wrench,
-    title: "Lifetime Support",
-    desc: "Spare parts, technical service, and operator training delivered by our in-house engineers.",
-  },
-  {
-    icon: Truck,
-    title: "Global Logistics",
-    desc: "Turnkey shipping, installation, and commissioning to your facility anywhere in the region.",
-  },
-  {
-    icon: Award,
-    title: "Trusted Partner",
-    desc: "Authorized representative for leading European, American, and Asian manufacturers.",
-  },
-];
-
-const industries = [
-  "Automotive",
-  "Steel & Metal",
-  "Food & Beverage",
-  "Oil & Gas",
-  "Construction",
-  "Pharmaceuticals",
-];
-
-const stats = [
-  { value: "20+", label: "Years of Experience" },
-  { value: "1,200+", label: "Machines Delivered" },
-  { value: "35", label: "Countries Served" },
-  { value: "500+", label: "Active B2B Clients" },
-];
-
 function HomePage() {
+  const { heroImage, heroImageAlt, values, industries, stats, partners } = home;
   const featured = machines.slice(0, 3);
   const featuredParts = parts_list.slice(0, 3);
 
@@ -86,8 +37,8 @@ function HomePage() {
       <section className="relative overflow-hidden bg-surface text-surface-foreground">
         <div className="absolute inset-0">
           <motion.img
-            src={heroImg}
-            alt="Industrial machinery factory floor"
+            src={heroImage}
+            alt={heroImageAlt}
             width={1920}
             height={1080}
             className="h-full w-full object-cover opacity-70"
@@ -288,16 +239,14 @@ function HomePage() {
             Trusted suppliers & partners
           </p>
           <div className="mt-8 grid grid-cols-2 items-center gap-x-10 gap-y-6 opacity-70 sm:grid-cols-3 md:grid-cols-6">
-            {["MEKANIX", "FERROCAST", "TECHLINE", "AXIOM", "NORDMET", "PRECISA"].map(
-              (label) => (
-                <div
-                  key={label}
-                  className="font-display text-center text-lg font-semibold tracking-[0.18em] text-muted-foreground"
-                >
-                  {label}
-                </div>
-              ),
-            )}
+            {partners.map((label) => (
+              <div
+                key={label}
+                className="font-display text-center text-lg font-semibold tracking-[0.18em] text-muted-foreground"
+              >
+                {label}
+              </div>
+            ))}
           </div>
         </div>
       </section>

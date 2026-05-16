@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { site } from "@/config/site";
+import { site } from "@/constants";
 import { QuoteButton } from "./CTAButtons";
 import { cn } from "@/lib/utils";
 

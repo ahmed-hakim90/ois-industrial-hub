@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Mail, MessageCircle } from "lucide-react";
-import { mailLink, waLink } from "@/config/site";
+import { mailLink, waLink } from "@/constants";
 import { cn } from "@/lib/utils";
 
-type Variant = "accent" | "solid" | "outline" | "ghost";
+type Variant = "accent" | "solid" | "outline" | "ghost" | "whatsapp" | "surface";
 type Size = "sm" | "md" | "lg";
 
 const base =
@@ -15,6 +15,10 @@ const variants: Record<Variant, string> = {
   outline:
     "border border-border bg-transparent text-foreground hover:bg-secondary",
   ghost: "bg-transparent text-foreground hover:bg-secondary",
+  whatsapp:
+    "border border-[#25D366] bg-[#25D366]/15 text-[#86efac] hover:bg-[#25D366] hover:text-white",
+  surface:
+    "border border-surface-foreground/40 bg-surface-foreground/5 text-surface-foreground hover:bg-surface-foreground/15",
 };
 
 const sizes: Record<Size, string> = {

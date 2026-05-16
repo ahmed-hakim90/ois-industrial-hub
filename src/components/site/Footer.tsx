@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
-import { mailLink, site, waLink } from "@/config/site";
+import { mailLink, site, waLink } from "@/constants";
 
 export function Footer() {
   return (
