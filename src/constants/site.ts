@@ -7,8 +7,8 @@ export const site = {
   description:
     "OIS Machinery supplies premium industrial machinery, heavy equipment, and auxiliary parts to manufacturers worldwide. Request a quotation today.",
   email: "info@oismachinery.com",
-  phoneDisplay: "+20 100 000 0000",
-  whatsappNumber: "201000000000", // E.164 without +, used for wa.me
+  phoneDisplay: "+20 1552995922",
+  whatsappNumber: "201552995922", // E.164 without +, used for wa.me
   facebook: "https://facebook.com/oismachinery",
   address: "Industrial Zone, Cairo, Egypt",
   nav: [
