@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Mail, MessageCircle } from "lucide-react";
-import { mailLink, waLink } from "@/constants";
+import { mailLink, site, waLink } from "@/constants";
 import { cn } from "@/lib/utils";
 
 type Variant = "accent" | "solid" | "outline" | "ghost" | "whatsapp" | "surface";
@@ -40,6 +40,23 @@ export function QuoteButton({
   label?: string;
   product?: string;
 }) {
+  if (site.previewMode) {
+    const message = product
+      ? `Hello, I'd like a quote for: ${product}`
+      : "Hello, I'd like to request a quotation.";
+    return (
+      <a
+        href={waLink(message)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cn(base, variants[variant], sizes[size], className)}
+      >
+        {label}
+        <ArrowRight className="h-4 w-4" />
+      </a>
+    );
+  }
+
   return (
     <Link
       to="/contact"
@@ -115,8 +132,19 @@ export function ExploreButton({
   size?: Size;
   className?: string;
 }) {
+  const classes = cn(base, variants[variant], sizes[size], className);
+
+  if (site.previewMode) {
+    return (
+      <span className={cn(classes, "cursor-default")} aria-disabled="true">
+        {label}
+        <ArrowRight className="h-4 w-4" />
+      </span>
+    );
+  }
+
   return (
-    <Link to={to} className={cn(base, variants[variant], sizes[size], className)}>
+    <Link to={to} className={classes}>
       {label}
       <ArrowRight className="h-4 w-4" />
     </Link>

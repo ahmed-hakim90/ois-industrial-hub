@@ -7,6 +7,7 @@ import { MachineCard } from "@/components/site/MachineCard";
 import { CTASection } from "@/components/site/CTASection";
 import { categories, machines, site } from "@/constants";
 import { cn } from "@/lib/utils";
+import { previewGate } from "@/lib/preview-gate";
 
 export const Route = createFileRoute("/machines")({
   head: () => ({
@@ -28,7 +29,7 @@ export const Route = createFileRoute("/machines")({
     links: [{ rel: "canonical", href: "/machines" }],
   }),
   pendingComponent: RouteLoading,
-  component: MachinesPage,
+  component: previewGate(MachinesPage),
 });
 
 function MachinesPage() {

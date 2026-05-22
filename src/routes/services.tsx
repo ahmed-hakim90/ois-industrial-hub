@@ -3,6 +3,7 @@ import { RouteLoading } from "@/components/site/RouteLoading";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { CTASection } from "@/components/site/CTASection";
 import { services } from "@/constants/services";
+import { previewGate } from "@/lib/preview-gate";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -21,7 +22,7 @@ export const Route = createFileRoute("/services")({
     links: [{ rel: "canonical", href: "/services" }],
   }),
   pendingComponent: RouteLoading,
-  component: ServicesPage,
+  component: previewGate(ServicesPage),
 });
 
 function ServicesPage() {

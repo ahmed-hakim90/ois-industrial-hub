@@ -1,12 +1,12 @@
-import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { InternalLink } from "./InternalLink";
 import { QuoteButton, WhatsAppButton } from "./CTAButtons";
 import type { Machine } from "@/constants";
 
 export function MachineCard({ machine }: { machine: Machine }) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10 hover:border-accent/40">
-      <Link
+      <InternalLink
         to="/machines/$slug"
         params={{ slug: machine.slug }}
         className="relative block aspect-[4/3] overflow-hidden bg-surface"
@@ -22,7 +22,7 @@ export function MachineCard({ machine }: { machine: Machine }) {
         <span className="absolute left-4 top-4 rounded-full bg-background/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-foreground backdrop-blur">
           {machine.category}
         </span>
-      </Link>
+      </InternalLink>
 
       <div className="flex flex-1 flex-col gap-4 p-6">
         <div>
@@ -35,13 +35,13 @@ export function MachineCard({ machine }: { machine: Machine }) {
         </div>
 
         <div className="mt-auto flex flex-col gap-2 pt-2">
-          <Link
+          <InternalLink
             to="/machines/$slug"
             params={{ slug: machine.slug }}
             className="inline-flex items-center justify-between border-b border-border pb-3 text-sm font-semibold text-foreground transition-colors hover:text-accent"
           >
             View Details <ArrowRight className="h-4 w-4" />
-          </Link>
+          </InternalLink>
           <div className="grid grid-cols-2 gap-2 pt-1">
             <QuoteButton size="sm" label="Request Quote" product={machine.name} />
             <WhatsAppButton

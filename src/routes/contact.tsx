@@ -5,6 +5,7 @@ import { z } from "zod";
 import { Facebook, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { mailLink, site, waLink } from "@/constants";
 import { cn } from "@/lib/utils";
+import { previewGate } from "@/lib/preview-gate";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -47,7 +48,7 @@ export const Route = createFileRoute("/contact")({
     links: [{ rel: "canonical", href: "/contact" }],
   }),
   pendingComponent: RouteLoading,
-  component: ContactPage,
+  component: previewGate(ContactPage),
 });
 
 function ContactPage() {

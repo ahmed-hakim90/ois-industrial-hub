@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { InternalLink } from "@/components/site/InternalLink";
 import { motion } from "framer-motion";
 import { RouteLoading } from "@/components/site/RouteLoading";
 import { Factory, Cog, ArrowRight } from "lucide-react";
@@ -126,12 +127,12 @@ function HomePage() {
             </p>
           </div>
           <div className="flex items-center md:justify-end">
-            <Link
+            <InternalLink
               to="/about"
               className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-accent"
             >
               About the company <ArrowRight className="h-4 w-4" />
-            </Link>
+            </InternalLink>
           </div>
         </div>
       </section>

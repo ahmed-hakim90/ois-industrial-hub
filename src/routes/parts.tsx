@@ -7,6 +7,7 @@ import { PartCard } from "@/components/site/PartCard";
 import { CTASection } from "@/components/site/CTASection";
 import { partCategoryLabels, parts_list, site } from "@/constants";
 import { cn } from "@/lib/utils";
+import { previewGate } from "@/lib/preview-gate";
 
 export const Route = createFileRoute("/parts")({
   head: () => ({
@@ -31,7 +32,7 @@ export const Route = createFileRoute("/parts")({
     links: [{ rel: "canonical", href: "/parts" }],
   }),
   pendingComponent: RouteLoading,
-  component: PartsPage,
+  component: previewGate(PartsPage),
 });
 
 function PartsPage() {

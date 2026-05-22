@@ -10,6 +10,7 @@ import {
   EmailButton,
 } from "@/components/site/CTAButtons";
 import { findMachine, relatedMachines, site, type Machine } from "@/constants";
+import { previewGate } from "@/lib/preview-gate";
 
 export const Route = createFileRoute("/machines/$slug")({
   loader: ({ params }): { machine: Machine } => {
@@ -50,7 +51,7 @@ export const Route = createFileRoute("/machines/$slug")({
     };
   },
   pendingComponent: RouteLoading,
-  component: MachineDetailPage,
+  component: previewGate(MachineDetailPage),
 });
 
 function MachineDetailPage() {
